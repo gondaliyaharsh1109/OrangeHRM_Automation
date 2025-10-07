@@ -14,7 +14,7 @@ public class LeavePage extends BasePage{
     Faker faker = new Faker();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
     By employeeNameInputField = By.xpath("//input[@placeholder='Type for hints...']");
-    By employeeOptionClick = By.xpath("//div[@role='listbox']//span[normalize-space()='Test 1']");
+    By employeeOptionClick = By.xpath("//div[@role='listbox']//span[normalize-space()='Test User 1']");
     By clickOnLeaveType = By.xpath("//div[@class='oxd-select-text-input']");
     By selectLeaveType = By.xpath("//div[@role='listbox']//span[normalize-space()='CAN - Personal']");
     By fromDatePicker = By.xpath("(//input[@placeholder='yyyy-dd-mm'])[1]");
