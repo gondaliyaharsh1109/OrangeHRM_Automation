@@ -12,7 +12,7 @@ public class DashboardTest extends BaseTest{
     @Test
     public void verifySearchFunctionalityOnDashboard(){
         DashboardPage dashboardPage = new DashboardPage(driver);
-        dashboardPage.verifySearchFunctionalityOnDashboard("da","Dashboard");
+        dashboardPage.verifySearchFunctionalityInToggle("da","Dashboard");
     }
     @Test
     public void logoutFunctionality(){
