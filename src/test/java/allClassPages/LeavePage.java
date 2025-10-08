@@ -2,8 +2,10 @@ package allClassPages;
 
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
@@ -12,13 +14,12 @@ import java.time.format.DateTimeFormatter;
 
 public class LeavePage extends BasePage{
     Faker faker = new Faker();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+    Actions actions = new Actions(driver);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     By employeeNameInputField = By.xpath("//input[@placeholder='Type for hints...']");
-    By employeeOptionClick = By.xpath("//div[@role='listbox']//span[normalize-space()='Test User 1']");
     By clickOnLeaveType = By.xpath("//div[@class='oxd-select-text-input']");
-    By selectLeaveType = By.xpath("//div[@role='listbox']//span[normalize-space()='CAN - Personal']");
-    By fromDatePicker = By.xpath("(//input[@placeholder='yyyy-dd-mm'])[1]");
-    By toDatePicker = By.xpath("(//input[@placeholder='yyyy-dd-mm'])[2]");
+    By fromDatePicker = By.xpath("(//input[@placeholder='mm-dd-yyyy'])[1]");
+    By toDatePicker = By.xpath("(//input[@placeholder='mm-dd-yyyy'])[2]");
     By partialDaysDropdown = By.xpath("(//div[@class='oxd-select-text-input'])[2]");
     By daysSelectionDropdown = By.xpath("//div[@role='listbox']//span[normalize-space()='All Days']");
     By durationDropdown = By.xpath("(//div[@class='oxd-select-text-input'])[3]");
@@ -31,9 +32,6 @@ public class LeavePage extends BasePage{
     public LeavePage(WebDriver driver){
         super(driver);
     }
-    public WebElement elementToBeClickable(By locator){
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
     public void fillAssignLeaveForm(String employeeName){
         String fakeComment = faker.lorem().sentence(10);
         String fromDate = LocalDate.now().plusDays(2).format(formatter);
@@ -42,14 +40,16 @@ public class LeavePage extends BasePage{
         DashboardPage dashboardPage = new DashboardPage(driver);
         loginPage.executeLogin("Admin","admin123");
         dashboardPage.clickOnAssignLeaveBtn();
+
         waitForElement(employeeNameInputField).sendKeys(employeeName);
-        waitForElement(employeeOptionClick).click();
-//        String option = String.format("//div[@role='listbox']//span[normalize-space()='%s']",employeeOption);
-//        WebElement employeeOptions = driver.findElement(By.xpath(option));
-//        employeeOptions.click();
+        WebElement employeeOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@role='option']//span[normalize-space()='Orange Test']")));
+        actions.moveToElement(employeeOption).click().perform();
+
         waitForElement(clickOnLeaveType).click();
-        waitForElement(selectLeaveType).click();
-        waitForElement(fromDatePicker).sendKeys(fromDate);
+        WebElement leaveOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@role='option']//span[normalize-space()='CAN - Personal']")));
+        actions.moveToElement(leaveOption).click().perform();
+
+        waitForElement(fromDatePicker).sendKeys(fromDate, Keys.TAB);
         waitForElement(toDatePicker).sendKeys(toDate);
         waitForElement(partialDaysDropdown).click();
         waitForElement(daysSelectionDropdown).click();
