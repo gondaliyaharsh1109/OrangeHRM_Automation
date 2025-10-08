@@ -7,6 +7,6 @@ public class LeaveTest extends BaseTest{
     @Test
     public void fillAssignLeaveForm(){
         LeavePage leavePage = new LeavePage(driver);
-        leavePage.fillAssignLeaveForm("test");
+        leavePage.fillAssignLeaveForm("Orange");
     }
 }
