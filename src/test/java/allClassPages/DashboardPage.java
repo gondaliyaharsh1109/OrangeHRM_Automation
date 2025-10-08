@@ -29,7 +29,7 @@ public class DashboardPage extends BasePage{
         waitForElement(clickToggleBtn).click();
         waitForElement(searchInputField);
     }
-    public void verifySearchFunctionalityOnDashboard(String search, String searchedTab){
+    public void verifySearchFunctionalityInToggle(String search, String searchedTab){
         loginPage.executeLogin("Admin","admin123");
         waitForElement(searchInputField).sendKeys(search);
         String actualText = waitForElement(firstSearchTab).getText();

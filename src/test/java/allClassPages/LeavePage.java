@@ -17,7 +17,9 @@ public class LeavePage extends BasePage{
     Actions actions = new Actions(driver);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     By employeeNameInputField = By.xpath("//input[@placeholder='Type for hints...']");
+    By selectEmployeeOption = By.xpath("//div[@role='option']//span[normalize-space()='Orange Test']");
     By clickOnLeaveType = By.xpath("//div[@class='oxd-select-text-input']");
+    By selectLeaveOption = By.xpath("//div[@role='option']//span[normalize-space()='CAN - Personal']");
     By fromDatePicker = By.xpath("(//input[@placeholder='mm-dd-yyyy'])[1]");
     By toDatePicker = By.xpath("(//input[@placeholder='mm-dd-yyyy'])[2]");
     By partialDaysDropdown = By.xpath("(//div[@class='oxd-select-text-input'])[2]");
@@ -42,12 +44,10 @@ public class LeavePage extends BasePage{
         dashboardPage.clickOnAssignLeaveBtn();
 
         waitForElement(employeeNameInputField).sendKeys(employeeName);
-        WebElement employeeOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@role='option']//span[normalize-space()='Orange Test']")));
-        actions.moveToElement(employeeOption).click().perform();
+        actions.moveToElement(waitForElement(selectEmployeeOption)).click().perform();
 
         waitForElement(clickOnLeaveType).click();
-        WebElement leaveOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@role='option']//span[normalize-space()='CAN - Personal']")));
-        actions.moveToElement(leaveOption).click().perform();
+        actions.moveToElement(waitForElement(selectLeaveOption)).click().perform();
 
         waitForElement(fromDatePicker).sendKeys(fromDate, Keys.TAB);
         waitForElement(toDatePicker).sendKeys(toDate);
