@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 public class LeaveTest extends BaseTest{
     @Test
-    public void fillAssignLeaveForm(){
+    public void fillAssignLeaveForm()throws  InterruptedException{
         LeavePage leavePage = new LeavePage(driver);
         leavePage.fillAssignLeaveForm("Orange");
     }
